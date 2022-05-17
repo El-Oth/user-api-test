@@ -21,7 +21,7 @@ const register = async (req, res) => {
     }
   };
   
-  // -------------------Get user by id from Params-------------//
+  // -------------------Get user by id-------------//
   
   const getUser = async (req, res) => {
       const user = await User.findById(req.params.id);
@@ -35,6 +35,24 @@ const register = async (req, res) => {
       });
       console.log(user, 'user back');
     };
+ // -------------------update user-------------//
+
+  const editUser = (req, res, next) => {
+    let { user } = req;
+
+    // You pick only allowed fields from submitted body
+    const allowedFields = { firstName: req.body.firstName, lastName: req.body.lastName };
+
+    // Override the current user data with new one
+    user = Object.assign(user, allowedFields);
+
+    user.save((err, savedUser) => {
+        if (err) {
+            return next(err);
+        }
+        res.json(savedUser.toJSON());
+    });
+};
 
     // -------------------Delete User-------------//
 
@@ -65,6 +83,6 @@ const getAllUsers = async (req, res) => {
     getUser,
     userDelete,
     getAllUsers,
-  
+    editUser
   };
   
