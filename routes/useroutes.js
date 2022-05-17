@@ -3,8 +3,9 @@ const router = express.Router();
 const {
   register,
   getUser,
-  userDelete,
   getAllUsers,
+  editUser,
+  userDelete,
 } = require("../controllers/usercontroller");
 
 router
@@ -16,6 +17,8 @@ router
   .get('/user', getUser)
 // ------------------Get all users---------------------//
   .get('/all', getAllUsers)
+// ------------------update user---------------------//
+.put('/edit', editUser)
 // ------------------delete user---------------------//
   .delete('/delete', userDelete)
 
